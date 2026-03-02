@@ -38,6 +38,15 @@ function QRModal({ amount, onDone, onClose }) {
           </div>
         </div>
 
+        <div className="space-y-3">
+          <button
+            onClick={() => window.open(qrLink)}
+            className="w-full bg-blue-500 text-white py-3 rounded-xl"
+          >
+            Mở app ngân hàng
+          </button>
+        </div>
+
         {/* Info */}
 
         <div className="bg-gray-50 p-4 rounded-xl space-y-3">
