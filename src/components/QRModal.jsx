@@ -1,44 +1,15 @@
 function QRModal({ amount, onDone, onClose }) {
-  const bankInfo = JSON.parse(localStorage.getItem("bankInfo")) || {};
+  const bank = "vietcombank";
 
-  const bank = bankInfo.bank || "VCB";
+  const accountNumber = "1054957071";
 
-  const accountNumber = bankInfo.account || "1054957071";
-
-  const accountName = bankInfo.name || "THAI PHAN THANH SANG";
+  const accountName = "THAI PHAN THANH SANG";
 
   const content = "SAVE" + amount;
 
   const qrLink = `https://img.vietqr.io/image/${bank}-${accountNumber}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(
     content
   )}&accountName=${encodeURIComponent(accountName)}`;
-
-  let deepLink = "";
-
-  switch (bank) {
-    case "VCB":
-      deepLink = "vcbdigibank://";
-      break;
-
-    case "MB":
-      deepLink = "mbbank://";
-      break;
-
-    case "TCB":
-      deepLink = "tcbmobile://";
-      break;
-
-    case "BIDV":
-      deepLink = "bidvsmartbanking://";
-      break;
-
-    case "ACB":
-      deepLink = "acbmobile://";
-      break;
-
-    default:
-      deepLink = "vcbdigibank://";
-  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -73,11 +44,17 @@ function QRModal({ amount, onDone, onClose }) {
 
         <button
           onClick={() => {
-            window.location.href = deepLink;
+            const accountNumber = "1054957071";
+
+            const content = "SAVE" + amount;
+
+            const deeplink = `vcbdigibank://transfer?account=${accountNumber}&amount=${amount}&message=${content}`;
+
+            window.location.href = deeplink;
           }}
           className="w-full bg-blue-500 text-white py-3 rounded-xl font-bold"
         >
-          Mở app ngân hàng
+          Mở ngân hàng
         </button>
 
         {/* Info */}
