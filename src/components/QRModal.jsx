@@ -38,9 +38,18 @@ function QRModal({ amount, onDone, onClose }) {
           </div>
         </div>
 
+        {/* Open bank*/}
         <div className="space-y-3">
           <button
-            onClick={() => window.open(qrLink)}
+            onClick={() => {
+              const accountNumber = "1054957071";
+
+              const content = "SAVE" + amount;
+
+              const deeplink = `vcbdigibank://transfer?account=${accountNumber}&amount=${amount}&message=${content}`;
+
+              window.location.href = deeplink;
+            }}
             className="w-full bg-blue-500 text-white py-3 rounded-xl"
           >
             Mở app ngân hàng
