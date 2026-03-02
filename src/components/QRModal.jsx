@@ -44,13 +44,13 @@ function QRModal({ amount, onDone, onClose }) {
 
         <button
           onClick={() => {
-            const accountNumber = "1054957071";
-
             const content = "SAVE" + amount;
 
-            const deeplink = `vcbdigibank://transfer?account=${accountNumber}&amount=${amount}&message=${content}`;
+            // copy nội dung
+            navigator.clipboard.writeText(content);
 
-            window.location.href = deeplink;
+            // mở MB
+            window.location.href = "mbbank://";
           }}
           className="w-full bg-blue-500 text-white py-3 rounded-xl font-bold"
         >
