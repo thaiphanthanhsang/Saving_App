@@ -1,6 +1,7 @@
 import { useState } from "react";
 import QRModal from "./QRModal";
 import { savingData } from "../data/savingData";
+import BankSettings from "./BankSettings";
 
 function SavingGrid() {
   const [selectedAmount, setSelectedAmount] = useState(null);
@@ -57,8 +58,9 @@ function SavingGrid() {
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Header */}
 
-        <h1 className="text-3xl font-bold">Tiết Kiệm Mỗi Ngày</h1>
+        <h1 className="text-3xl font-bold">Tiết Kiệm Mỗi Ngày Nhé Bé Iu ❤️</h1>
 
+        <BankSettings />
         {/* Reset Button */}
 
         <button

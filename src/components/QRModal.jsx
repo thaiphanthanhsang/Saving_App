@@ -1,9 +1,11 @@
 function QRModal({ amount, onDone, onClose }) {
-  const bank = "vietcombank";
+  const bankInfo = JSON.parse(localStorage.getItem("bankInfo"));
 
-  const accountNumber = "1054957071";
+  const bank = bankInfo?.bank || "vietcombank";
 
-  const accountName = "THAI PHAN THANH SANG";
+  const accountNumber = bankInfo?.account || "1054957071";
+
+  const accountName = bankInfo?.name || "THAI PHAN THANH SANG";
 
   const content = "SAVE " + amount;
 
@@ -42,13 +44,17 @@ function QRModal({ amount, onDone, onClose }) {
         <div className="space-y-3">
           <button
             onClick={() => {
-              const accountNumber = "1054957071";
+              const bank = bankInfo?.bank || "vietcombank";
+
+              const accountNumber = bankInfo?.account || "1054957071";
+
+              const accountName = bankInfo?.name || "THAI PHAN THANH SANG";
 
               const content = "SAVE" + amount;
 
-              const deeplink = `vcbdigibank://transfer?account=${accountNumber}&amount=${amount}&message=${content}`;
+              const link = `https://vietqr.io/pay?bank=${bank}&account=${accountNumber}&amount=${amount}&addInfo=${content}&accountName=${accountName}`;
 
-              window.location.href = deeplink;
+              window.location.href = link;
             }}
             className="w-full bg-blue-500 text-white py-3 rounded-xl"
           >
@@ -62,7 +68,7 @@ function QRModal({ amount, onDone, onClose }) {
           <div className="flex justify-between">
             <span className="text-gray-500">Ngân hàng</span>
 
-            <span className="font-bold">Vietcombank</span>
+            <span className="font-bold">{bank}</span>
           </div>
 
           <div className="flex justify-between">
