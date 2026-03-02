@@ -41,15 +41,15 @@ function BankSettings() {
         >
           <option value="">Chọn ngân hàng</option>
 
-          <option value="vietcombank">Vietcombank</option>
+          <option value="VCB">Vietcombank</option>
 
-          <option value="mbbank">MB Bank</option>
+          <option value="MB">MB Bank</option>
 
-          <option value="techcombank">Techcombank</option>
+          <option value="TCB">Techcombank</option>
 
-          <option value="bidv">BIDV</option>
+          <option value="BIDV">BIDV</option>
 
-          <option value="acb">ACB</option>
+          <option value="ACB">ACB</option>
         </select>
       </div>
 

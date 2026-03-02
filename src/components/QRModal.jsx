@@ -1,15 +1,44 @@
 function QRModal({ amount, onDone, onClose }) {
-  const bankInfo = JSON.parse(localStorage.getItem("bankInfo"));
+  const bankInfo = JSON.parse(localStorage.getItem("bankInfo")) || {};
 
-  const bank = bankInfo?.bank || "vietcombank";
+  const bank = bankInfo.bank || "VCB";
 
-  const accountNumber = bankInfo?.account || "1054957071";
+  const accountNumber = bankInfo.account || "1054957071";
 
-  const accountName = bankInfo?.name || "THAI PHAN THANH SANG";
+  const accountName = bankInfo.name || "THAI PHAN THANH SANG";
 
-  const content = "SAVE " + amount;
+  const content = "SAVE" + amount;
 
-  const qrLink = `https://img.vietqr.io/image/${bank}-${accountNumber}-compact2.png?amount=${amount}&addInfo=${content}&accountName=${accountName}`;
+  const qrLink = `https://img.vietqr.io/image/${bank}-${accountNumber}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(
+    content
+  )}&accountName=${encodeURIComponent(accountName)}`;
+
+  let deepLink = "";
+
+  switch (bank) {
+    case "VCB":
+      deepLink = "vcbdigibank://";
+      break;
+
+    case "MB":
+      deepLink = "mbbank://";
+      break;
+
+    case "TCB":
+      deepLink = "tcbmobile://";
+      break;
+
+    case "BIDV":
+      deepLink = "bidvsmartbanking://";
+      break;
+
+    case "ACB":
+      deepLink = "acbmobile://";
+      break;
+
+    default:
+      deepLink = "vcbdigibank://";
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -40,27 +69,16 @@ function QRModal({ amount, onDone, onClose }) {
           </div>
         </div>
 
-        {/* Open bank*/}
-        <div className="space-y-3">
-          <button
-            onClick={() => {
-              const bank = bankInfo?.bank || "vietcombank";
+        {/* Open Bank */}
 
-              const accountNumber = bankInfo?.account || "1054957071";
-
-              const accountName = bankInfo?.name || "THAI PHAN THANH SANG";
-
-              const content = "SAVE" + amount;
-
-              const link = `https://vietqr.io/pay?bank=${bank}&account=${accountNumber}&amount=${amount}&addInfo=${content}&accountName=${accountName}`;
-
-              window.location.href = link;
-            }}
-            className="w-full bg-blue-500 text-white py-3 rounded-xl"
-          >
-            Mở app ngân hàng
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            window.location.href = deepLink;
+          }}
+          className="w-full bg-blue-500 text-white py-3 rounded-xl font-bold"
+        >
+          Mở app ngân hàng
+        </button>
 
         {/* Info */}
 
