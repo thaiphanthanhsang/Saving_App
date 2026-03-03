@@ -1,20 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QRModal from "./QRModal";
 import { savingData } from "../data/savingData";
+import { db } from "../firebase";
+import { doc, setDoc, onSnapshot } from "firebase/firestore";
 
 function SavingGrid() {
   const [selectedAmount, setSelectedAmount] = useState(null);
 
-  const [completed, setCompleted] = useState(() => {
-    const saved = localStorage.getItem("completedSavings");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [completed, setCompleted] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      doc(db, "saving", "sharedData"),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          setCompleted(docSnap.data().completed || []);
+        } else {
+          setCompleted([]);
+        }
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
 
   const handleClick = (item) => {
     setSelectedAmount(item);
   };
 
-  const markDone = (id) => {
+  const markDone = async (id) => {
     let newCompleted;
 
     if (completed.includes(id)) {
@@ -23,21 +37,16 @@ function SavingGrid() {
       newCompleted = [...completed, id];
     }
 
-    setCompleted(newCompleted);
-
-    localStorage.setItem("completedSavings", JSON.stringify(newCompleted));
+    await setDoc(doc(db, "saving", "sharedData"), { completed: newCompleted });
 
     setSelectedAmount(null);
   };
 
-  const resetSavings = () => {
+  const resetSavings = async () => {
     const confirmReset = window.confirm("Reset bảng tiết kiệm?");
-
     if (!confirmReset) return;
 
-    localStorage.removeItem("completedSavings");
-
-    setCompleted([]);
+    await setDoc(doc(db, "saving", "sharedData"), { completed: [] });
   };
 
   // Calculations
@@ -80,7 +89,7 @@ function SavingGrid() {
           </div>
 
           <div className="bg-white p-6 rounded-2xl shadow">
-            <p className="text-gray-500">Mục tiêu</p>
+            <p className="text-gray-500">Mục tiêu 🔥</p>
 
             <p className="text-3xl font-bold">{totalGoal.toLocaleString()} ₫</p>
           </div>
@@ -143,7 +152,9 @@ function SavingGrid() {
                   </div>
 
                   {done && (
-                    <div className="text-green-700 mt-2 text-sm">✔ Đã xong</div>
+                    <div className="text-green-700 mt-2 text-sm">
+                      ✔ Đã bỏ heo 🤑
+                    </div>
                   )}
 
                   {!done && (
