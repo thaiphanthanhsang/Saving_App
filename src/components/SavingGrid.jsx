@@ -72,7 +72,7 @@ function SavingGrid() {
 
         <button
           onClick={resetSavings}
-          className="px-5 py-2 rounded-xl border bg-white hover:bg-red-50"
+          className="px-5 py-2 rounded-xl border bg-white hover:bg-red-600 hover:text-white"
         >
           Reset Challenge
         </button>
@@ -83,9 +83,7 @@ function SavingGrid() {
           <div className="bg-white p-6 rounded-2xl shadow">
             <p className="text-gray-500">Tổng đã tiết kiệm</p>
 
-            <p className="text-3xl font-bold">
-              {totalSaved.toLocaleString()} ₫
-            </p>
+            <p className="text-3xl font-bold">{totalSaved.toLocaleString()}</p>
           </div>
 
           <div className="bg-white p-6 rounded-2xl shadow">
